@@ -49,7 +49,7 @@ public class dice_sim {
             dice1=(int)(Math.random()*6+1);
             dice2=(int)(Math.random()*6+1);
             total = dice1 + dice2;
-                System.out.printf("You rolled a(n) %d\n", total); 
+                System.out.printf("You rolled a(n) %d and %d totaling %d\n", dice1, dice2, total); 
 				break;
 				// Case 3 will roll 3 dice
 			case 3: 
@@ -57,7 +57,7 @@ public class dice_sim {
             dice2=(int)(Math.random()*6+1);
             dice3=(int)(Math.random()*6+1);
             total = dice1 + dice2 + dice3;
-                System.out.printf("You rolled a(n) %d\n", total);
+                System.out.printf("You rolled a(n) %d, %d, and %d totaling %d\n", dice1, dice2, dice3, total);
 				break;
 				// Case 4 will roll 4 dice
 			case 4:
@@ -66,7 +66,7 @@ public class dice_sim {
             dice3=(int)(Math.random()*6+1);
             dice4=(int)(Math.random()*6+1);
             total = dice1 + dice2 + dice3 + dice4;
-                System.out.printf("You rolled a(n) %d\n", total);
+                System.out.printf("You rolled a(n) %d, %d, %d, and %d totaling %d\n", dice1, dice2, dice3, dice4, total);
 				break;
 				// Case 5 will roll 5 dice
 			case 5:
@@ -76,7 +76,7 @@ public class dice_sim {
             dice4=(int)(Math.random()*6+1);
             dice5=(int)(Math.random()*6+1);
             total = dice1 + dice2 + dice3 + dice4 + dice5;
-                System.out.printf("You rolled a(n) %d\n", total); 
+                System.out.printf("You rolled a(n) %d, %d, %d, %d, and %d\n", dice1, dice2, dice3, dice4, dice5, total); 
 				break;
 				// Case 6 will simply exit the program
 			case 6: System.out.println("Goodbye!");
