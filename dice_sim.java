@@ -76,7 +76,7 @@ public class dice_sim {
             dice4=(int)(Math.random()*6+1);
             dice5=(int)(Math.random()*6+1);
             total = dice1 + dice2 + dice3 + dice4 + dice5;
-                System.out.printf("You rolled a(n) %d, %d, %d, %d, and %d\n", dice1, dice2, dice3, dice4, dice5, total); 
+                System.out.printf("You rolled a(n) %d, %d, %d, %d, and %d totaling %d\n", dice1, dice2, dice3, dice4, dice5, total); 
 				break;
 				// Case 6 will simply exit the program
 			case 6: System.out.println("Goodbye!");
