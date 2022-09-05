@@ -1,24 +1,26 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.lang.Math;
 
 public class dice_sim {
+    static int count1,count2,count3,count4,count5,count6,i,numDice,dice = 0;
     static Scanner theScanner = new Scanner(System.in);
+    static Scanner theScanner2 = new Scanner(System.in);
     public static int getMenuOption() {
 		int choice = 0;
 		// While statement will repeat until it receives a valid selection
 		do {
-			System.out.print("\nPlease enter an integer to choose how many dice you would like to roll (1-5) or choose 6 to end the program.\n");
+			System.out.print("\nPlease enter an integer to choose how many dice you would like to roll (1-5) or choose 6 to end the program. Choice 7 is for testing.\n");
 			try{
             choice = theScanner.nextInt();
             } catch (InputMismatchException e1) {
                 theScanner = new Scanner(System.in);
-            
             }
 
 			// If statement to break the loop if a valid selection is made
-                if (choice >= 1 && choice <= 5) {
+                if (choice >= 1 && choice <= 7) {
 				break;
-			    } else if (choice < 1 || choice > 6) {
+			    } else if (choice < 1 || choice > 7) {
 				// Prints if a invalid selection is made
 				System.out.print("\nSorry, please make a valid selection.\n");
 			    }
@@ -80,7 +82,55 @@ public class dice_sim {
 				break;
 				// Case 6 will simply exit the program
 			case 6: System.out.println("Goodbye!");
-			return;
+			    return;
+            case 7: System.out.print("How many dice do you want to roll?");  
+            numDice = theScanner2.nextInt();
+    
+            do {
+                dice = (int)(Math.random()*6+1);
+                if (dice == 1){
+                    ++count1;
+                }
+                else if(dice == 2){
+                    ++count2;
+                }
+                else if(dice == 3){
+                    ++count3;
+                }
+                else if(dice == 4){
+                    ++count4;
+                }
+                else if(dice == 5){
+                    ++count5;
+                }
+                else if(dice == 6){
+                    ++count6;
+                }
+    
+                i++;
+            }while (i<numDice);
+
+            int dev = numDice/6;
+            int dif1 = count1-dev;
+            int dif2 = count2-dev;
+            int dif3 = count3-dev;
+            int dif4 = count4-dev;
+            int dif5 = count5-dev;
+            int dif6 = count6-dev;
+
+            double perc1 = 100 * dif1/(double)dev;
+            double perc2 = 100 * dif2/(double)dev;
+            double perc3 = 100 * dif3/(double)dev;
+            double perc4 = 100 * dif4/(double)dev;
+            double perc5 = 100 * dif5/(double)dev;
+            double perc6 = 100 * dif6/(double)dev;
+
+    
+            System.out.printf("\n1s Rolled: %d  ("+(dif1 > 0 ? "+" : "")+"%d)  [%.2f%%]\n2s Rolled: %d  ("+(dif2> 0 ? "+" : "")+"%d)  [%.2f%%]\n3s Rolled: %d  ("+(dif3 > 0 ? "+" : "")+"%d)  [%.2f%%]"
+                + "\n4s Rolled: %d  ("+(dif4 > 0 ? "+" : "")+"%d)  [%.2f%%]\n5s Rolled: %d  ("+(dif5 > 0 ? "+" : "")+"%d)  [%.2f%%]\n6s Rolled: %d  ("+(dif6 > 0 ? "+" : "")+"%d)  [%.2f%%]\n"
+                ,count1,dif1,perc1,count2,dif2,perc2,count3,dif3,perc3,count4,dif4,perc4,count5,dif5,perc5,count6,dif6,perc6);
+
+                break;
 			}
         }
     }
