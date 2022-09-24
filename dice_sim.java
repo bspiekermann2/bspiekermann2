@@ -3,10 +3,11 @@ import java.util.Scanner;
 import java.lang.Math;
 
 public class dice_sim {
-    static int dice,i,j,numDice,numRoll,sum = 0;
+    static int dice,i,j,numDice,numRoll,sum,number = 0;
     static int freq[] = new int [6];
     static int sumFreq[] = new int [31];
     static int rolls[] = new int [5];
+    static int prevRolls[] = new int [8];
     static Scanner theScanner = new Scanner(System.in);
     static Scanner theScanner2 = new Scanner(System.in);
     public static int getMenuOption() {
@@ -177,9 +178,23 @@ public class dice_sim {
                 for (int k = 5; k <= 30; k++){
                     System.out.println("Sums of "+k+" rolled -> "+sumFreq[k]);
                 }
-
             }
             
+            System.out.print("\nProving previous rolls do not influence next rolls, choose number to check (1-6)\n");
+            number = theScanner2.nextInt();
+
+            i=0;
+            do {
+                dice = (int)(Math.random()*6+1);
+                if (dice == number){
+                    dice = (int)(Math.random()*6+1);
+                    ++prevRolls[dice];
+                }
+                ++i;
+            }while (i<numRoll);
+            for (int k=1; k <= 6; k++){
+                System.out.println("Number of "+k+"s rolled after a "+number+" -> "+prevRolls[k]);
+            }
                 break;
 			}
         }
