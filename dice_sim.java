@@ -90,11 +90,15 @@ public class dice_sim {
 				// Case 6 will simply exit the program
 			case 6: System.out.println("Goodbye!");
 			    return;
-            case 7: System.out.print("How many dice do you want to roll?");  
+            case 7:
+            // This portion demonstrates the distribution for one die rolled a bunch of times
+            System.out.print("How many dice do you want to roll?");  
             numRoll = theScanner2.nextInt();
             
             do {
+                // While loop to roll the dice the requested amount of time
                 dice = (int)(Math.random()*6+1);
+                // If statement to increment the designated element in the freq array to signify which number is rolled 1-6
                 if (dice == 1){
                     ++freq[0];
                 }
@@ -116,15 +120,16 @@ public class dice_sim {
     
                 i++;
             }while (i<numRoll);
-
+            // Finds the ideal number that each number should have been rolled 
             int dev = numRoll/6;
+            // Calculates how far off the actual number rolled was
             int dif1 = freq[0]-dev;
             int dif2 = freq[1]-dev;
             int dif3 = freq[2]-dev;
             int dif4 = freq[3]-dev;
             int dif5 = freq[4]-dev;
             int dif6 = freq[5]-dev;
-
+            // Calculates the percent difference
             double perc1 = 100 * dif1/(double)dev;
             double perc2 = 100 * dif2/(double)dev;
             double perc3 = 100 * dif3/(double)dev;
@@ -140,27 +145,27 @@ public class dice_sim {
             dice = 0;
             i = 0;
             numRoll = 0;
-
+            
+            // This portion demonstrates the distribution for multiple dice rolled a bunch of times
             theScanner2 = new Scanner(System.in);
-            System.out.print("How many dice do you want to roll?");
+            System.out.print("\nHow many times do you want to roll the dice?");
             numRoll = theScanner2.nextInt();
             System.out.print("How many dice do you want to roll at once?");
             numDice = theScanner2.nextInt();
-
+            
+            // Nested while loop to roll the requested number of dice at once and many times over
             do {
                 while (j<numDice){
                     dice = (int)(Math.random()*6+1);
                     sum+=dice;
                     j++;
-                    if (j == numDice){
-                        ++sumFreq[sum];
-                        sum = 0;
-                    }
                 }
+                ++sumFreq[sum];
+                sum = 0;
                 ++i;
                 j = 0;
             }while (i<numRoll);
-
+            // If statement to print the values in the array depending on the number of dice rolled at once
             if(numDice == 2){
                 for (int k = 2; k <= 12; k++){
                     System.out.println("Sums of "+k+" rolled -> "+sumFreq[k]);
@@ -177,9 +182,7 @@ public class dice_sim {
                 for (int k = 5; k <= 30; k++){
                     System.out.println("Sums of "+k+" rolled -> "+sumFreq[k]);
                 }
-
             }
-            
                 break;
 			}
         }
