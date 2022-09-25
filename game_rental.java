@@ -85,6 +85,8 @@ public class game_rental {
             } else if (yearDInt > 9999 || yearCInt > 9999) {
                 System.out.print("\nPlease enter a valid year\n");
 
+            } else if (dayDInt < 1 || monthDInt < 1 || yearDInt < 1800 || dayCInt < 1 || monthCInt < 1 || yearCInt < 1) {
+                System.out.print("\nPlease enter a valid day, month, or year\n");
             } else {
                 validDate = true;
             }
