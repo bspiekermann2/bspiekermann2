@@ -109,7 +109,7 @@ public class vend_mach {
         System.out.print("Change prices? (y/n): ");
         answer=ynScan.nextLine();
         if(answer=="y"){
-            System.out.print("\nSet price to 0.00 to signify the right crank of a two crank item");
+            System.out.print("\nSet price to 0.00 to signify the right crank of a two crank item\n");
             setPrice(price);
             setCoin(coins);
         } else if(answer=="n"){
@@ -125,9 +125,13 @@ public class vend_mach {
             input = inputScan.nextLine();
             if(input.startsWith("d")==true){
                 input = input.startsWith("d") ? input.substring(1) : input;
-                if(depositDbl<maxPrice){
-                    deposit += Integer.parseInt(input);
-                    depositDbl=deposit/100;
+                if(Integer.parseInt(input)==5||Integer.parseInt(input)==10||Integer.parseInt(input)==25||Integer.parseInt(input)==100){
+                    if(depositDbl<maxPrice){
+                        deposit += Integer.parseInt(input);
+                        depositDbl=deposit/100;
+                    }
+                } else {
+                    System.out.print("INVALID CURRENCY\n");
                 }
             } else if (input.startsWith("p")==true){
                 for (i = 0; i < tempCode.length-1; i++){
@@ -149,7 +153,7 @@ public class vend_mach {
                     }
                     finalPrice=price[itemIndex];
                     if(depositDbl<finalPrice&&finalPrice>0){
-                        System.out.printf("%.2f",finalPrice);
+                        System.out.printf("%.2f\n",finalPrice);
                     } else if(finalPrice==0) {
                         System.out.print("INVALID CODE\n");
                     } else if (depositDbl>=finalPrice&&finalPrice>0){
