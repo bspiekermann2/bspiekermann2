@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.util.Arrays;
-import java.util.InputMismatchException;
 public class triangle {
     static Scanner theScanner  = new Scanner(System.in);
     static int input[] = new int[3];

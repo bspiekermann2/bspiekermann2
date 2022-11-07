@@ -184,7 +184,7 @@ public class dice_sim {
                     System.out.println("Sums of "+k+" rolled -> "+sumFreq[k]);
                 }
             }
-<<<<<<< HEAD
+
             
             System.out.print("\nProving previous rolls do not influence next rolls, choose number to check (1-6)\n");
             number = theScanner2.nextInt();
@@ -201,8 +201,7 @@ public class dice_sim {
             for (int k=1; k <= 6; k++){
                 System.out.println("Number of "+k+"s rolled after a "+number+" -> "+prevRolls[k]);
             }
-=======
->>>>>>> 849a801b3e3bee3b2ff822695baf1d48b3705bec
+
                 break;
 			}
         }

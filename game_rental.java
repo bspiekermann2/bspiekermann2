@@ -5,12 +5,13 @@ public class game_rental {
     static String checkDate, dob, gameRate;
     static int dayCInt, monthCInt, yearCInt, dayDInt, monthDInt, yearDInt;
     static Scanner theScanner = new Scanner(System.in);
-    static boolean validDate = false;
+    static boolean validDate, leap = false;
     static String checkParts[], dobParts[] = new String [3];
     static int month[] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
     static String ratings[] = {"EC", "E", "E10", "T", "M", "AO"};
     
-
+    // This method does the main age calculation for the code
+   
     public static int[] calcAge (int dayCInt, int monthCInt, int yearCInt, int dayDInt, int monthDInt, int yearDInt) {
         if (dayDInt > dayCInt) {
             dayCInt = dayCInt + month[monthDInt - 1];
@@ -28,8 +29,9 @@ public class game_rental {
     }
 
     public static void main (String args[]){
+        
         do {
-            System.out.print("Please enter checkout date (MM/DD/YYYY): ");
+            System.out.print("\nPlease enter checkout date (MM/DD/YYYY): ");
             checkDate = theScanner.nextLine();
             System.out.print("Please enter date of birth (MM/DD/YYYY): ");
             dob = theScanner.nextLine();
@@ -47,16 +49,25 @@ public class game_rental {
                 dayDInt = Integer.parseInt(dobParts[1]);
                 monthDInt = Integer.parseInt(dobParts[0]);
                 yearDInt = Integer.parseInt(dobParts[2]);
-                System.out.printf("\nCheckout: %d,%d,%d (day,month,year)\nDOB: %d,%d,%d (day,month,year)\nGame Rating: %s",
-                dayCInt,monthCInt,yearCInt,dayDInt,monthDInt,yearDInt,gameRate);
 
             } catch (NumberFormatException e1){
                 System.out.print("\nPlease enter dates with the proper format (MM/DD/YYYY)");
                 theScanner = new Scanner(System.in);
 
+            } catch (ArrayIndexOutOfBoundsException e2) {
+                System.out.print("\nPlease enter dates with the proper format (MM/DD/YYYY)");
+                theScanner = new Scanner(System.in);
+
+            }
+            
+            // This section recognizes if either of the years is a leap year
+            if (((yearDInt % 4 == 0 &&  yearDInt % 100 != 0 ) || yearDInt % 400 == 0) || ((yearCInt % 4 == 0 &&  yearCInt % 100 != 0 ) || yearCInt % 400 == 0) && (monthDInt == 2 || monthCInt == 2)) {
+                month[2]=29;
+                leap = true;
+    
             }
 
-            // This section checks the game rating that was entered to be sure it is valid
+            // This section checks the game rating that was entered to be sure it is valid and the dates are within normal calendar parameters
             if (!gameRate.equals(ratings[0]) && !gameRate.equals(ratings[1]) && !gameRate.equals(ratings[2]) && !gameRate.equals(ratings[3]) && !gameRate.equals(ratings[4]) && !gameRate.equals(ratings[5])) {
                 System.out.print("\nPlease enter valid game rating (EC,E,E10,T,M,AO)\n");
 
@@ -67,7 +78,7 @@ public class game_rental {
             monthCInt == 7 || monthCInt == 8 || monthCInt == 10 || monthCInt == 12) && (dayDInt > 31 || dayCInt > 31)) {
                 System.out.print("\nPlease enter a valid day for the month entered\n");
 
-            } else if ((monthDInt == 2 || monthCInt == 2) && (dayDInt > 29 || dayCInt > 29)) {
+            } else if ((monthDInt == 2 && dayDInt > 29 ) || (monthCInt == 2 && dayCInt > 29)) {
                 System.out.print("\nPlease enter a valid day for the month entered\n");
 
             } else if (yearDInt > yearCInt) {
@@ -87,29 +98,32 @@ public class game_rental {
 
             } else if (dayDInt < 1 || monthDInt < 1 || yearDInt < 1800 || dayCInt < 1 || monthCInt < 1 || yearCInt < 1) {
                 System.out.print("\nPlease enter a valid day, month, or year\n");
+                
             } else {
                 validDate = true;
+
             }
         } while(validDate == false);
 
         int ageFinal[] = calcAge(dayCInt, monthCInt, yearCInt, dayDInt, monthDInt, yearDInt);
-
+        System.out.print("\nAge of customer "+ageFinal[2]+" year(s) and "+ageFinal[1]+" month(s) old");
+        // This section checks the cutomer's age against the age requirements for the game rating they are trying to rent
         if (gameRate.equals(ratings[0])) {
             System.out.print("\nRental Allowed");
 
-        } else if (gameRate.equals(ratings[1]) && ageFinal[0] >= 8 && ageFinal[1] >= 6){
+        } else if (gameRate.equals(ratings[1]) && ageFinal[2] >= 8 && ageFinal[1] >= 6){
             System.out.print("\nRental Allowed");
 
-        } else if (gameRate.equals(ratings[2]) && ageFinal[0] >= 10) {
+        } else if (gameRate.equals(ratings[2]) && ageFinal[2] >= 10) {
             System.out.print("\nRental Allowed");
 
-        } else if (gameRate.equals(ratings[3]) && ageFinal[0] >= 13) {
+        } else if (gameRate.equals(ratings[3]) && ageFinal[2] >= 13) {
             System.out.print("\nRental Allowed");
 
-        } else if (gameRate.equals(ratings[4]) && ageFinal[0] >= 17) {
+        } else if (gameRate.equals(ratings[4]) && ageFinal[2] >= 17) {
             System.out.print("\nRental Allowed");
 
-        } else if (gameRate.equals(ratings[5]) && ageFinal[0] >= 18) {
+        } else if (gameRate.equals(ratings[5]) && ageFinal[2] >= 18) {
             System.out.print("\nRental Allowed");
 
         } else {
@@ -118,3 +132,5 @@ public class game_rental {
         }
     }
 }
+
+
