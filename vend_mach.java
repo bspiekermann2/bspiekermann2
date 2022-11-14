@@ -125,10 +125,13 @@ public class vend_mach {
             input = inputScan.nextLine();
             if(input.startsWith("d")==true){
                 input = input.startsWith("d") ? input.substring(1) : input;
-                if(Integer.parseInt(input)==5||Integer.parseInt(input)==10||Integer.parseInt(input)==25||Integer.parseInt(input)==100){
+                if(Integer.parseInt(input)==5||Integer.parseInt(input)==10||Integer.parseInt(input)==25||Integer.parseInt(input)==100||Integer.parseInt(input)==500){
                     if(depositDbl<maxPrice){
                         deposit += Integer.parseInt(input);
-                        depositDbl=deposit/100;
+                        System.out.print(deposit);
+                        depositDbl=deposit/100.0;
+                        System.out.print(depositDbl);
+
                     }
                 } else {
                     System.out.print("INVALID CURRENCY\n");
