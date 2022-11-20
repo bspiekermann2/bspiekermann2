@@ -135,8 +135,9 @@ public class vend_mach {
                     if(depositDbl<maxPrice){
                         deposit += Integer.parseInt(input);
                         System.out.print(deposit);
-                        depositDbl=deposit/100;
+                        depositDbl=deposit/100.0;
                         System.out.print(depositDbl);
+
                     }
                 } else {
                     System.out.print("INVALID CURRENCY\n");
