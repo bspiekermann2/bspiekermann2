@@ -12,7 +12,7 @@ public class vend_mach {
     static String tempCode[] = new String [3];
     // Element 0-3 are $1 coins, quarters, dimes, and nickels respectively
     static int coins[] = { 99, 99, 99, 99 };
-    static double price[] = {1.50, 2.00, 1.25, 0.75, 0.50, 2.25, 2.50, 1.25, 1.25, 1.25, 
+    static double price[] = {1.50, 2.00, 1.25, 0.00, 0.50, 2.25, 2.50, 1.25, 1.25, 1.25, 
                             1.25, 1.10, 1.10, 0.00, 1.10, 1.10, 0.00, 1.10, 1.10, 1.10,
                             1.10, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00, 1.00,
                             2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00, 2.00,
@@ -60,7 +60,7 @@ public class vend_mach {
                 } while(diff!=0); 
             } else if(cancel==true){
                 do{
-                    if (deposit>=100&&coins[0]>=0){
+                    if (deposit>=100&&coins[0]>0){
                         do{
                         deposit = deposit-100;
                         change=change+100;
@@ -72,7 +72,7 @@ public class vend_mach {
                         change=change+25;
                         coinage= coinage+"quarter ";
                         } while(depositDbl>=25);
-                    } else if(depositDbl>=10&&coins[2]>0){
+                    } else if(deposit>=10&&coins[2]>0){
                         do{
                         deposit = deposit-10;
                         change=change+10;
@@ -87,8 +87,13 @@ public class vend_mach {
                     }
                 } while(deposit!=0); 
             }
-            change=change/100;
-            System.out.printf("%.2f ( %s)",change, coinage);
+            if (tempCode[2]==null){
+                change=change/100;
+                System.out.printf("Change %.2f ( %s)",change, coinage);
+            } else{
+                change=change/100;
+                System.out.printf("Dispense %s, change %.2f ( %s)",tempCode[2],change, coinage);
+            }
         return change;
     }
     public static double[] setPrice (double[] price){
@@ -127,20 +132,21 @@ public class vend_mach {
         do{
             // Main input from customer. Determines if they deposited money, pressed a code button, or pressed the cancel button
             input = inputScan.nextLine();
-            if(totalChange<4.95+maxPrice){
+            if(totalChange<4.95+maxPrice&&coins[3]<4&&coins[1]<3){
+                System.out.print("REJECT CURRENCY\n");
                 break;
             } else if(input.startsWith("d")==true){
                 input = input.startsWith("d") ? input.substring(1) : input;
                 if(Integer.parseInt(input)==5||Integer.parseInt(input)==10||Integer.parseInt(input)==25||Integer.parseInt(input)==100||Integer.parseInt(input)==500){
                     if(depositDbl<maxPrice){
                         deposit += Integer.parseInt(input);
-                        System.out.print(deposit);
                         depositDbl=deposit/100.0;
-                        System.out.print(depositDbl);
 
+                    } else {
+                        System.out.print("REJECT CURRENCY\n");
                     }
                 } else {
-                    System.out.print("INVALID CURRENCY\n");
+                    System.out.print("REJECT CURRENCY\n");
                 }
             } else if(input.startsWith("p")==true){
                 for (i = 0; i < tempCode.length-1; i++){
