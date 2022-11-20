@@ -5,7 +5,7 @@ public class vend_mach {
     static Scanner ynScan = new Scanner(System.in);
     static Scanner configScan = new Scanner(System.in);
     static boolean cancel, done=false;
-    static double finalPrice, depositDbl, fpDbl, change, maxPrice;
+    static double finalPrice, depositDbl, fpDbl, change, maxPrice, totalChange;
     static int fp, itemIndex, deposit, i, j=0;
     static String input, code, temp, answer;
     static String coinage = "";
@@ -60,32 +60,32 @@ public class vend_mach {
                 } while(diff!=0); 
             } else if(cancel==true){
                 do{
-                    if (depositDbl>=100&&coins[0]>=0){
+                    if (deposit>=100&&coins[0]>=0){
                         do{
-                        depositDbl = depositDbl-100;
+                        deposit = deposit-100;
                         change=change+100;
                         coinage= coinage+"dollar coin ";
-                        } while(depositDbl>=100);
-                    } else if(depositDbl>=25&&coins[1]>=3){
+                        } while(deposit>=100);
+                    } else if(deposit>=25&&coins[1]>=3){
                         do{
-                        depositDbl = depositDbl-25;
+                        deposit = deposit-25;
                         change=change+25;
                         coinage= coinage+"quarter ";
                         } while(depositDbl>=25);
                     } else if(depositDbl>=10&&coins[2]>0){
                         do{
-                        depositDbl = depositDbl-10;
+                        deposit = deposit-10;
                         change=change+10;
                         coinage= coinage+"dime ";
-                        } while(depositDbl>=10);
-                    } else if(depositDbl>=5&&coins[3]>=4){
+                        } while(deposit>=10);
+                    } else if(deposit>=5&&coins[3]>=4){
                         do{
-                        depositDbl = depositDbl-5;
+                        deposit = deposit-5;
                         change=change+5;
                         coinage= coinage+"nickel ";
-                        } while(depositDbl>=5);
+                        } while(deposit>=5);
                     }
-                } while(depositDbl!=0); 
+                } while(deposit!=0); 
             }
             change=change/100;
             System.out.printf("%.2f ( %s)",change, coinage);
@@ -106,34 +106,42 @@ public class vend_mach {
         return coins;
     }                             
     public static void main (String args[]){
+        // Config part of vend machine
         System.out.print("Change prices? (y/n): ");
         answer=ynScan.nextLine();
         if(answer=="y"){
             System.out.print("\nSet price to 0.00 to signify the right crank of a two crank item\n");
             setPrice(price);
+            System.out.print("\nElement 0-3 are $1 coins, quarters, dimes, and nickels respectively\n");
             setCoin(coins);
         } else if(answer=="n"){
         }
-
+        // Finds the max price item
         for (i = 0; i < price.length; i++){
             if (price[i] > maxPrice){
             maxPrice = price[i];
             }
         }
+        totalChange=(1.00*coins[0])+(0.25*coins[1])+(0.10*coins[2])+(0.05*coins[3]);
 
         do{
+            // Main input from customer. Determines if they deposited money, pressed a code button, or pressed the cancel button
             input = inputScan.nextLine();
-            if(input.startsWith("d")==true){
+            if(totalChange<4.95+maxPrice){
+                break;
+            } else if(input.startsWith("d")==true){
                 input = input.startsWith("d") ? input.substring(1) : input;
-                if(Integer.parseInt(input)==5||Integer.parseInt(input)==10||Integer.parseInt(input)==25||Integer.parseInt(input)==100){
+                if(Integer.parseInt(input)==5||Integer.parseInt(input)==10||Integer.parseInt(input)==25||Integer.parseInt(input)==100||Integer.parseInt(input)==500){
                     if(depositDbl<maxPrice){
                         deposit += Integer.parseInt(input);
+                        System.out.print(deposit);
                         depositDbl=deposit/100;
+                        System.out.print(depositDbl);
                     }
                 } else {
                     System.out.print("INVALID CURRENCY\n");
                 }
-            } else if (input.startsWith("p")==true){
+            } else if(input.startsWith("p")==true){
                 for (i = 0; i < tempCode.length-1; i++){
                     temp = input.startsWith("p") ? input.substring(1) : input;
                             tempCode[i]= temp;
@@ -161,7 +169,7 @@ public class vend_mach {
                         done=true;
                     }
                 }
-            } else if(input=="cancel"){
+            } else if(input.startsWith("cancel")==true){
                 cancel=true;
                 calcChange(change,depositDbl,finalPrice);
                 done=true;
